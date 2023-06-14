@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://l6bt1ml2v7d1"]
+
+[ext_resource type="Script" path="res://assets/vehicles/sedan/VehicleSedan.gd" id="1_nm1gr"]
+[ext_resource type="ArrayMesh" uid="uid://bhpklcujerqdj" path="res://assets/vehicles/sedan/sedan_body.mesh" id="2_kdgp2"]
+[ext_resource type="ArrayMesh" uid="uid://crm2bjh6m1y7j" path="res://assets/vehicles/sedan/sedan_wheel.mesh" id="3_xvgqo"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1ndjd"]
+points = PackedVector3Array(-0.0613831, 0.0214037, -0.126944, 0.075, 0.0599933, 0.0419987, 0.0552664, 0.0525126, 0.118046, -0.0444516, 0.109177, -0.0553279, -0.0629866, 6.93889e-18, 0.11389, 0.0608752, 3.46663e-05, -0.1226, 0.0608752, 3.46668e-05, 0.1176, 0.0453497, 0.108252, -0.0544343, -0.0574851, 0.0525126, 0.118046, 0.0552664, 0.0525126, -0.126944, 0.0430602, 0.105484, 0.0186035, -0.0769292, 0.0602622, 0.0285867, -0.0629866, 1.38778e-17, -0.11889, -0.0413903, 0.105477, 0.0186005, -0.0574851, 0.0525126, -0.126944, 0.0785932, 0.0602622, 0.0285867, -0.0613831, 0.0214037, 0.121944, 0.0669298, 0.0213927, -0.123046, 0.0785932, 0.0486157, 0.0441545, 0.0630471, 0.0213927, 0.121944, -0.0769292, 0.0486267, 0.0441545, 0.0639403, 0.000616448, -0.117594, 0.0669298, 0.0486157, -0.0841393, 0.0639403, 0.000616448, 0.112594, -0.0652658, 0.0214037, -0.123046, -0.0463165, 0.103417, 0.019252, 0.0630471, 0.0213927, -0.126944, -0.0652658, 0.0214037, 0.118046, 0.0669298, 0.0213927, 0.118046, -0.0592377, 0, 0.117653, -0.0592377, -6.93889e-18, -0.122653, -0.0769292, 0.0486267, 0.0285867)
+
+[node name="VehicleSedan" type="VehicleBody3D"]
+script = ExtResource("1_nm1gr")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = ExtResource("2_kdgp2")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_1ndjd")
+
+[node name="WFrontLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0.65)
+wheel_radius = 0.3
+
+[node name="WFrontRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0.65)
+wheel_radius = 0.3
+
+[node name="Mesh" type="MeshInstance3D" parent="WFrontRight"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.2, 0, 0)
+mesh = ExtResource("3_xvgqo")
+
+[node name="WBackLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -0.65)
+wheel_radius = 0.3
+
+[node name="Mesh" type="MeshInstance3D" parent="WBackLeft"]
+transform = Transform3D(-10, 0, -8.74228e-07, 0, 10, 0, 8.74228e-07, 0, -10, -0.2, 0, 0)
+mesh = ExtResource("3_xvgqo")
+
+[node name="WBackRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, -0.65)
+wheel_radius = 0.3
+
+[node name="Mesh" type="MeshInstance3D" parent="WBackRight"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.2, 0, 0)
+mesh = ExtResource("3_xvgqo")
