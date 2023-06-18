@@ -1,11 +1,12 @@
 extends VehicleBody3D
 class_name Car
 
-const HEADLIGHT_ENERGY := [0.0, 2.0, 4.0]
-#
+
 @onready var _car_body := $Body as MeshInstance3D
 @onready var _car_wbleft := $WBackLeft as VehicleWheel3D
 @onready var _car_wbright := $WBackRight as VehicleWheel3D
+@onready var _hlright := $HLRight as SpotLight3D
+@onready var _hlleft := $HLLeft as SpotLight3D
 #
 @export var light_night_mode : bool
 #
@@ -21,7 +22,9 @@ func _unhandled_key_input(_event : InputEvent) -> void:
 	elif Input.is_action_just_released("back"):
 		_breaklights(false)
 	elif Input.is_action_just_pressed("light"):
-		_headlights(headlights+1 if headlights+1 < HEADLIGHT_ENERGY.size() else 0)
+		_headlights(headlights+1 if headlights+1 < 3 else 0)
+	elif Input.is_action_just_pressed("reset"):
+		_reset()
 
 
 func _physics_process(d : float) -> void:
@@ -43,10 +46,35 @@ func set_color(color : Color) -> void:
 	_car_body.mesh.surface_get_material(2).albedo_color = color
 
 
+func _reset() -> void:
+	print("RESET")
+	global_transform.origin = Vector3(0.0, 1.0, 0.0)
+	global_position.y += 1.0
+
+
 func _headlights(level : int) -> void:
 	headlights = level
 	var m := _car_body.mesh.surface_get_material(3)
-	m.emission_energy_multiplier = HEADLIGHT_ENERGY[level]
+	match(level):
+		1:
+			m.emission_energy_multiplier = 2.0
+			_hlright.light_energy = 10.0
+			_hlright.spot_range = 5.0
+			_hlleft.light_energy = 10.0
+			_hlleft.spot_range = 5.0
+		2:
+			m.emission_energy_multiplier = 4.0
+			_hlright.light_energy = 20.0
+			_hlright.spot_range = 10.0
+			_hlleft.light_energy = 20.0
+			_hlleft.spot_range = 10.0
+		_:
+			m.emission_energy_multiplier = 0.0
+			_hlright.light_energy = 0.0
+			_hlright.spot_range = 0.0
+			_hlleft.light_energy = 0.0
+			_hlleft.spot_range = 0.0
+	
 	_car_body.mesh.surface_set_material(3, m)
 
 

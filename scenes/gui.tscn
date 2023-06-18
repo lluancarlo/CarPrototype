@@ -12,6 +12,25 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hyr80")
 
+[node name="Labels" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -96.0
+offset_right = 256.0
+grow_vertical = 0
+alignment = 1
+
+[node name="Label" type="Label" parent="Labels"]
+layout_mode = 2
+text = "W, A, S, D -> Move"
+
+[node name="Label2" type="Label" parent="Labels"]
+layout_mode = 2
+text = "E -> Lights"
+
 [node name="ChangeColor" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -46,18 +65,6 @@ presets_visible = false
 [node name="Button" type="Button" parent="ChangeColor/VBox"]
 layout_mode = 2
 text = "Change Color"
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = -32.0
-offset_right = 180.0
-offset_bottom = -6.0
-grow_vertical = 0
-text = "Use W, A, S, D to move"
 
 [connection signal="color_changed" from="ChangeColor/VBox/ColorPicker" to="." method="_on_color_picker_color_changed"]
 [connection signal="pressed" from="ChangeColor/VBox/Button" to="." method="_on_button_pressed"]
