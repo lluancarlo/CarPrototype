@@ -1,4 +1,4 @@
-# GameServer - WebSocket
+# Car Prototype
 
 https://github.com/lluancarlo/CarPrototype/assets/32052204/5d6e60f1-10f5-4299-865b-63218dfcd604
 
