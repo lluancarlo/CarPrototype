@@ -1,11 +1,12 @@
-[gd_scene load_steps=52 format=3 uid="uid://del72vip3ke8o"]
+[gd_scene load_steps=53 format=3 uid="uid://del72vip3ke8o"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_8shy6"]
 [ext_resource type="Texture2D" uid="uid://mq4kbdkwpeo0" path="res://assets/materials/textures/prototype_texture.png" id="1_vnqn7"]
-[ext_resource type="PackedScene" uid="uid://c570gqhngvxy6" path="res://assets/scn/Car.scn" id="2_wygbo"]
-[ext_resource type="PackedScene" uid="uid://bljsea7mi3tqx" path="res://assets/scn/3DCamera.scn" id="3_adcb6"]
+[ext_resource type="PackedScene" uid="uid://caaavx32ka63a" path="res://scenes/user_interface/user_interface.tscn" id="2_3bemu"]
+[ext_resource type="PackedScene" uid="uid://bljsea7mi3tqx" path="res://scenes/camera/3DCamera.scn" id="3_adcb6"]
+[ext_resource type="PackedScene" uid="uid://c570gqhngvxy6" path="res://assets/player/Player.scn" id="3_w167q"]
 [ext_resource type="Script" path="res://scenes/change_color.gd" id="4_qhvbw"]
-[ext_resource type="PackedScene" uid="uid://80q5ukhbxqkf" path="res://scenes/gui.tscn" id="5_80jw4"]
+[ext_resource type="Script" path="res://scenes/NetworkHandler.gd" id="7_xpl1k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dc3u0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -195,10 +196,22 @@ height = 2.0
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_8shy6")
-gui_path = NodePath("GUI")
-car_path = NodePath("Car")
+camera_path = NodePath("3DCamera")
 
-[node name="GUI" parent="." instance=ExtResource("5_80jw4")]
+[node name="UserInterface" parent="." instance=ExtResource("2_3bemu")]
+
+[node name="NetworkHandler" type="Node" parent="."]
+script = ExtResource("7_xpl1k")
+_player_scene = ExtResource("3_w167q")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="NetworkHandler"]
+_spawnable_scenes = PackedStringArray("res://assets/player/Player.scn")
+spawn_path = NodePath("../NetworkSpawner")
+
+[node name="NetworkSpawner" type="Node" parent="NetworkHandler"]
+
+[node name="3DCamera" parent="." node_paths=PackedStringArray("look_at") instance=ExtResource("3_adcb6")]
+look_at = NodePath("../Map")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_puqy4")
@@ -473,12 +486,6 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/BallPool/Ball09"]
 shape = SubResource("SphereShape3D_0eirp")
 
-[node name="Car" parent="." instance=ExtResource("2_wygbo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="3DCamera" parent="." node_paths=PackedStringArray("look_at") instance=ExtResource("3_adcb6")]
-look_at = NodePath("../Car")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.760134, -0.30235, 0.575136, 0.324884, 0.943409, 0.0665665, -0.562714, 0.136253, 0.815345, 0, 0, 0)
 light_energy = 0.8
@@ -486,7 +493,8 @@ shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_split_1 = 0.15
 
-[connection signal="color_changing" from="GUI" to="." method="_on_gui_color_changing"]
-[connection signal="color_close" from="GUI" to="." method="_on_gui_color_close"]
+[connection signal="online_connect_server" from="UserInterface" to="NetworkHandler" method="_on_UserInterface_online_connect_server"]
+[connection signal="online_create_host" from="UserInterface" to="NetworkHandler" method="_on_UserInterface_online_create_host"]
+[connection signal="play_game" from="UserInterface" to="." method="_on_user_interface_play_game"]
 [connection signal="change_car_color" from="Map/ChangeColor" to="." method="_on_change_car_color"]
 [connection signal="body_shape_entered" from="Map/ChangeColor/Area3D" to="Map/ChangeColor" method="_on_area_3d_body_shape_entered"]

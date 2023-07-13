@@ -1,20 +1,10 @@
 extends Node3D
 
 
-@export var gui_path : NodePath
 @export var car_path : NodePath
-@onready var _gui := get_node(gui_path) as GUI
-@onready var _car := get_node(car_path) as Car
+@export var camera_path : NodePath
+@onready var _camera := get_node(camera_path) as Camera
 
 
-func _on_change_car_color(current_color : Color) -> void:
-	_gui.show_change_color(current_color)
-
-
-func _on_gui_color_changing(color : Color) -> void:
-	_car.set_color(color)
-
-
-func _on_gui_color_close():
-	_car.brake = 0
-	_car.engine_status = true
+func _on_user_interface_play_game():
+	_camera.can_rotate = true

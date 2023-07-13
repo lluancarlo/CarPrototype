@@ -1,16 +1,15 @@
 extends Node3D
+class_name Camera
 
 @onready var _inner := $InnerGimbal as Node3D
 @onready var _cam := $InnerGimbal/Cam as Camera3D
 #
 @export var look_at: Node
+@export var distance_from := 4.0
 @export var mouse_sens := 0.25
 @export var zoom_sens := 0.25
 #
 var can_rotate : bool : set = _set_can_rotate
-var vertical_limit := Vector2(0.0, -60.0)
-
-
 func _set_can_rotate(new_value):
 	can_rotate = new_value
 	if new_value:
@@ -18,8 +17,10 @@ func _set_can_rotate(new_value):
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+var vertical_limit := Vector2(0.0, -60.0)
 
-func _process(_d) -> void:
+
+func _process(_delta: float) -> void:
 	position = look_at.position
 
 
@@ -55,3 +56,8 @@ func _unhandled_input(event : InputEvent):
 		elif event.button_index == 5 and _cam.position.z > 2.0:
 			_cam.position.z -= zoom_sens
 ##
+
+
+func update_target(target: Node) -> void:
+	look_at = target
+	create_tween().tween_property(_cam, "position:z", distance_from, 1.0)

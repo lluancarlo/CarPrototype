@@ -16,7 +16,17 @@ var max_rpm := 800
 var max_torque := mass * 2.0
 
 
+func _enter_tree():
+	set_multiplayer_authority(name.replace("P_","").to_int())
+
+
+func _ready() -> void:
+	if not is_multiplayer_authority(): return
+
+
 func _unhandled_key_input(_event : InputEvent) -> void:
+	if not is_multiplayer_authority(): return
+	
 	if Input.is_action_just_pressed("back"):
 		_breaklights(true)
 	elif Input.is_action_just_released("back"):
@@ -28,6 +38,8 @@ func _unhandled_key_input(_event : InputEvent) -> void:
 
 
 func _physics_process(d : float) -> void:
+	if not is_multiplayer_authority(): return
+	
 	steering = lerp(steering, Input.get_axis("right", "left") * 0.4, 5 * d)
 	if engine_status:
 		accelerate(Input.get_axis("back", "forward"))
