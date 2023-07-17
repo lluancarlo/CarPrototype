@@ -1,5 +1,5 @@
 extends Node3D
-class_name Camera
+class_name PlayerCamera
 
 @onready var _inner := $InnerGimbal as Node3D
 @onready var _cam := $InnerGimbal/Cam as Camera3D
@@ -20,8 +20,16 @@ func _set_can_rotate(new_value):
 var vertical_limit := Vector2(0.0, -60.0)
 
 
+func _ready():
+	if is_multiplayer_authority():
+		_cam.current = true
+	else:
+		queue_free()
+
+
 func _process(_delta: float) -> void:
-	position = look_at.position
+	if look_at != null:
+		position =  look_at.position
 
 
 ## Input Handler
@@ -58,6 +66,5 @@ func _unhandled_input(event : InputEvent):
 ##
 
 
-func update_target(target: Node) -> void:
-	look_at = target
-	create_tween().tween_property(_cam, "position:z", distance_from, 1.0)
+func set_current(is_current: bool) -> void:
+	_cam.current = is_current

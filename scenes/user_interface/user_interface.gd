@@ -2,8 +2,8 @@ extends Control
 
 
 signal play_game()
-signal online_create_host(host_name: String, host_ip: int)
-signal online_connect_server(server_address: String, server_ip: int)
+signal online_create_host(player_name: String, host_ip: int)
+signal online_connect_server(player_name: String, server_address: String, server_ip: int)
 
 const FADE_TIME := 0.25
 
@@ -28,14 +28,14 @@ func _on_OnlineMenu_back_to_main_menu():
 	_make_transition(_online_menu, _main_menu)
 
 
-func _on_online_menu_connect_server(server_address: String, server_ip: int):
-	online_connect_server.emit(server_address, server_ip)
+func _on_online_menu_connect_server(player_name: String, server_address: String, server_ip: int):
+	online_connect_server.emit(player_name, server_address, server_ip)
 	_make_transition(_online_menu, _ingame_menu)
 	get_tree().create_timer(FADE_TIME).timeout.connect(func(): play_game.emit())
 
 
-func _on_online_menu_create_host(host_name: String, host_ip: int):
-	online_create_host.emit(host_name, host_ip)
+func _on_online_menu_create_host(player_name: String, host_ip: int):
+	online_create_host.emit(player_name, host_ip)
 	_make_transition(_online_menu, _ingame_menu)
 	get_tree().create_timer(FADE_TIME).timeout.connect(func(): play_game.emit())
 ##

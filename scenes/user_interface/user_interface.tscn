@@ -96,6 +96,15 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
+[node name="PlayerName" type="Label" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Labels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Player Name"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Ip" type="Label" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Labels"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -117,6 +126,15 @@ vertical_alignment = 1
 [node name="Fields" type="VBoxContainer" parent="OnlineMenu/TabContainer/Client/VBox/HBox"]
 layout_mode = 2
 alignment = 1
+
+[node name="PlayerName" type="TextEdit" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Fields"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Your name"
+scroll_fit_content_height = true
 
 [node name="Ip" type="TextEdit" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Fields"]
 custom_minimum_size = Vector2(180, 40)
@@ -153,6 +171,7 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_13fii")
 theme_override_font_sizes/font_size = 20
+disabled = true
 text = "Connect"
 
 [node name="Host" type="TabBar" parent="OnlineMenu/TabContainer"]
@@ -177,12 +196,12 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="ServerName" type="Label" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Labels"]
+[node name="PlayerName" type="Label" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Labels"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_13fii")
 theme_override_font_sizes/font_size = 20
-text = "Server Name"
+text = "Player Name"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -199,13 +218,12 @@ vertical_alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="ServerName" type="TextEdit" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Fields"]
+[node name="PlayerName" type="TextEdit" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Fields"]
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_13fii")
 theme_override_font_sizes/font_size = 20
-text = "Local Server"
-placeholder_text = "Local Server"
+placeholder_text = "Your name"
 scroll_fit_content_height = true
 
 [node name="Port" type="TextEdit" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Fields"]
@@ -234,6 +252,7 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_13fii")
 theme_override_font_sizes/font_size = 20
+disabled = true
 text = "Create Server"
 
 [node name="InGameGUI" type="Control" parent="."]
@@ -275,8 +294,10 @@ autostart = true
 [connection signal="back_to_main_menu" from="OnlineMenu" to="." method="_on_OnlineMenu_back_to_main_menu"]
 [connection signal="connect_server" from="OnlineMenu" to="." method="_on_online_menu_connect_server"]
 [connection signal="create_host" from="OnlineMenu" to="." method="_on_online_menu_create_host"]
+[connection signal="text_changed" from="OnlineMenu/TabContainer/Client/VBox/HBox/Fields/PlayerName" to="OnlineMenu" method="_on_CLIENT_player_name_changed"]
 [connection signal="pressed" from="OnlineMenu/TabContainer/Client/VBox/Buttons/Back" to="OnlineMenu" method="_on_back_pressed"]
 [connection signal="pressed" from="OnlineMenu/TabContainer/Client/VBox/Buttons/Connect" to="OnlineMenu" method="_on_connect_pressed"]
+[connection signal="text_changed" from="OnlineMenu/TabContainer/Host/VBox/HBox/Fields/PlayerName" to="OnlineMenu" method="_on_HOST_player_name_changed"]
 [connection signal="pressed" from="OnlineMenu/TabContainer/Host/VBox/Buttons/Back" to="OnlineMenu" method="_on_back_pressed"]
 [connection signal="pressed" from="OnlineMenu/TabContainer/Host/VBox/Buttons/CreateServer" to="OnlineMenu" method="_on_create_server_pressed"]
 [connection signal="timeout" from="InGameGUI/FPS/Timer" to="InGameGUI" method="_on_timer_timeout"]
