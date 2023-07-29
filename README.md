@@ -1,7 +1,6 @@
 # Car Prototype
 
-https://github.com/lluancarlo/CarPrototype/assets/32052204/5d6e60f1-10f5-4299-865b-63218dfcd604
-
+https://github.com/lluancarlo/CarPrototype/assets/32052204/4d1c9379-1a17-4876-91d6-b1e03f788a0a
 
 <p align="center">
   <a href="https://github.com/lluancarlo/3DSlotGame/graphs/contributors">
@@ -20,4 +19,4 @@ https://github.com/lluancarlo/CarPrototype/assets/32052204/5d6e60f1-10f5-4299-86
 </p>
 
 ## Description
-A prototype for a Car Mechanics made in Godot 4.1 using real simulation physics, like suspensions, bounces and everything.
+A prototype for a Car Mechanics made in Godot 4.1 using real simulation physics, particle physics and multiplayer using RPC.

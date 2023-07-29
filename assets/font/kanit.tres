@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://w8wjtn3vmnhx"]
+
+[ext_resource type="FontFile" uid="uid://5u58ou13kqvx" path="res://assets/font/kanit-medium.ttf" id="1_fv0oo"]
+
+[resource]
+base_font = ExtResource("1_fv0oo")

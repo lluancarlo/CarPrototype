@@ -1,0 +1,303 @@
+[gd_scene load_steps=5 format=3 uid="uid://caaavx32ka63a"]
+
+[ext_resource type="Script" path="res://scenes/user_interface/user_interface.gd" id="1_4353u"]
+[ext_resource type="FontVariation" uid="uid://w8wjtn3vmnhx" path="res://assets/font/kanit.tres" id="2_13fii"]
+[ext_resource type="Script" path="res://scenes/user_interface/OnlineMenu.gd" id="2_udin1"]
+[ext_resource type="Script" path="res://scenes/user_interface/InGameGUI.gd" id="3_3fi1v"]
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_4353u")
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = -185.0
+offset_right = 127.0
+offset_bottom = 185.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="PlayOffline" type="Button" parent="MainMenu/VBox"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Play Offline"
+
+[node name="PlayOnline" type="Button" parent="MainMenu/VBox"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Play Online"
+
+[node name="OnlineMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_udin1")
+
+[node name="TabContainer" type="TabContainer" parent="OnlineMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -228.0
+offset_top = -133.0
+offset_right = 228.0
+offset_bottom = 133.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Client" type="TabBar" parent="OnlineMenu/TabContainer"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="OnlineMenu/TabContainer/Client"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="OnlineMenu/TabContainer/Client/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Labels" type="VBoxContainer" parent="OnlineMenu/TabContainer/Client/VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerName" type="Label" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Labels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Player Name"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Ip" type="Label" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Labels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "IP Address"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Port" type="Label" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Labels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Port"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Fields" type="VBoxContainer" parent="OnlineMenu/TabContainer/Client/VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerName" type="TextEdit" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Fields"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Your name"
+scroll_fit_content_height = true
+
+[node name="Ip" type="TextEdit" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Fields"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "localhost"
+placeholder_text = "localhost"
+scroll_fit_content_height = true
+
+[node name="Port" type="TextEdit" parent="OnlineMenu/TabContainer/Client/VBox/HBox/Fields"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "1234"
+placeholder_text = "1234"
+scroll_fit_content_height = true
+
+[node name="Buttons" type="HBoxContainer" parent="OnlineMenu/TabContainer/Client/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Back" type="Button" parent="OnlineMenu/TabContainer/Client/VBox/Buttons"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Back"
+
+[node name="Connect" type="Button" parent="OnlineMenu/TabContainer/Client/VBox/Buttons"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Connect"
+
+[node name="Host" type="TabBar" parent="OnlineMenu/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="OnlineMenu/TabContainer/Host"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="OnlineMenu/TabContainer/Host/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Labels" type="VBoxContainer" parent="OnlineMenu/TabContainer/Host/VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerName" type="Label" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Labels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Player Name"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Port" type="Label" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Labels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Port"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Fields" type="VBoxContainer" parent="OnlineMenu/TabContainer/Host/VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerName" type="TextEdit" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Fields"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Your name"
+scroll_fit_content_height = true
+
+[node name="Port" type="TextEdit" parent="OnlineMenu/TabContainer/Host/VBox/HBox/Fields"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "1234"
+placeholder_text = "1234"
+scroll_fit_content_height = true
+
+[node name="Buttons" type="HBoxContainer" parent="OnlineMenu/TabContainer/Host/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Back" type="Button" parent="OnlineMenu/TabContainer/Host/VBox/Buttons"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "Back"
+
+[node name="CreateServer" type="Button" parent="OnlineMenu/TabContainer/Host/VBox/Buttons"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Create Server"
+
+[node name="InGameGUI" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_3fi1v")
+
+[node name="FPS" type="HBoxContainer" parent="InGameGUI"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 72.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="InGameGUI/FPS"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.392157, 0, 1)
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "FPS:"
+
+[node name="Value" type="Label" parent="InGameGUI/FPS"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_13fii")
+theme_override_font_sizes/font_size = 20
+text = "000"
+
+[node name="Timer" type="Timer" parent="InGameGUI/FPS"]
+wait_time = 0.2
+autostart = true
+
+[connection signal="pressed" from="MainMenu/VBox/PlayOffline" to="." method="_on_play_offline_pressed"]
+[connection signal="pressed" from="MainMenu/VBox/PlayOnline" to="." method="_on_play_online_pressed"]
+[connection signal="back_to_main_menu" from="OnlineMenu" to="." method="_on_OnlineMenu_back_to_main_menu"]
+[connection signal="connect_server" from="OnlineMenu" to="." method="_on_online_menu_connect_server"]
+[connection signal="create_host" from="OnlineMenu" to="." method="_on_online_menu_create_host"]
+[connection signal="text_changed" from="OnlineMenu/TabContainer/Client/VBox/HBox/Fields/PlayerName" to="OnlineMenu" method="_on_CLIENT_player_name_changed"]
+[connection signal="pressed" from="OnlineMenu/TabContainer/Client/VBox/Buttons/Back" to="OnlineMenu" method="_on_back_pressed"]
+[connection signal="pressed" from="OnlineMenu/TabContainer/Client/VBox/Buttons/Connect" to="OnlineMenu" method="_on_connect_pressed"]
+[connection signal="text_changed" from="OnlineMenu/TabContainer/Host/VBox/HBox/Fields/PlayerName" to="OnlineMenu" method="_on_HOST_player_name_changed"]
+[connection signal="pressed" from="OnlineMenu/TabContainer/Host/VBox/Buttons/Back" to="OnlineMenu" method="_on_back_pressed"]
+[connection signal="pressed" from="OnlineMenu/TabContainer/Host/VBox/Buttons/CreateServer" to="OnlineMenu" method="_on_create_server_pressed"]
+[connection signal="timeout" from="InGameGUI/FPS/Timer" to="InGameGUI" method="_on_timer_timeout"]

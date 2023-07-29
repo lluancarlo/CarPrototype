@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://pph2543g76il"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_7u227"]
+[ext_resource type="PackedScene" uid="uid://c570gqhngvxy6" path="res://scenes/player/player_car/player_car.scn" id="1_dojhl"]
+[ext_resource type="PackedScene" uid="uid://bljsea7mi3tqx" path="res://scenes/player/player_camera/player_camera.scn" id="2_qir85"]
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_7u227")
+
+[node name="HUD" type="Node3D" parent="."]
+
+[node name="PlayerName" type="Label3D" parent="HUD"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71455, 0)
+text = "PlayerName"
+
+[node name="PlayerCar" parent="." instance=ExtResource("1_dojhl")]
+
+[node name="PlayerCamera" parent="." node_paths=PackedStringArray("look_at") instance=ExtResource("2_qir85")]
+look_at = NodePath("../PlayerCar")

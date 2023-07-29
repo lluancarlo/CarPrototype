@@ -1,11 +1,9 @@
-[gd_scene load_steps=52 format=3 uid="uid://del72vip3ke8o"]
+[gd_scene load_steps=44 format=3 uid="uid://del72vip3ke8o"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_8shy6"]
 [ext_resource type="Texture2D" uid="uid://mq4kbdkwpeo0" path="res://assets/materials/textures/prototype_texture.png" id="1_vnqn7"]
-[ext_resource type="PackedScene" uid="uid://c570gqhngvxy6" path="res://assets/scn/Car.scn" id="2_wygbo"]
-[ext_resource type="PackedScene" uid="uid://bljsea7mi3tqx" path="res://assets/scn/3DCamera.scn" id="3_adcb6"]
-[ext_resource type="Script" path="res://scenes/change_color.gd" id="4_qhvbw"]
-[ext_resource type="PackedScene" uid="uid://80q5ukhbxqkf" path="res://scenes/gui.tscn" id="5_80jw4"]
+[ext_resource type="PackedScene" uid="uid://caaavx32ka63a" path="res://scenes/user_interface/user_interface.tscn" id="2_3bemu"]
+[ext_resource type="Script" path="res://scenes/NetworkHandler.gd" id="7_xpl1k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dc3u0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -50,41 +48,6 @@ data = PackedVector3Array(50, 0, 2, -50, 0, 2, 50, 0, -2, -50, 0, 2, -50, 0, -2,
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2la5w"]
 data = PackedVector3Array(50, 0, 2, -50, 0, 2, 50, 0, -2, -50, 0, 2, -50, 0, -2, 50, 0, -2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_45f5d"]
-albedo_color = Color(1, 0, 0.101961, 1)
-metallic = 0.7
-roughness = 0.5
-emission = Color(1, 0, 0, 1)
-refraction_scale = -0.24
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ys5lp"]
-material = SubResource("StandardMaterial3D_45f5d")
-top_radius = 2.0
-bottom_radius = 2.0
-height = 0.1
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gben2"]
-emission_shape = 2
-emission_sphere_radius = 2.0
-spread = 180.0
-gravity = Vector3(0, 1, 0)
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 0.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eaej0"]
-transparency = 1
-albedo_color = Color(0.0862745, 0.172549, 1, 0.466667)
-
-[sub_resource type="SphereMesh" id="SphereMesh_xirp1"]
-material = SubResource("StandardMaterial3D_eaej0")
-radius = 0.05
-height = 0.1
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_wo12c"]
-height = 1.0
-radius = 2.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ervw"]
 albedo_color = Color(0.0745098, 1, 0.0588235, 1)
@@ -195,10 +158,17 @@ height = 2.0
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_8shy6")
-gui_path = NodePath("GUI")
-car_path = NodePath("Car")
 
-[node name="GUI" parent="." instance=ExtResource("5_80jw4")]
+[node name="UserInterface" parent="." instance=ExtResource("2_3bemu")]
+
+[node name="NetworkHandler" type="Node" parent="."]
+script = ExtResource("7_xpl1k")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="NetworkHandler"]
+_spawnable_scenes = PackedStringArray("res://scenes/player/player.tscn")
+spawn_path = NodePath("../NetworkSpawner")
+
+[node name="NetworkSpawner" type="Node" parent="NetworkHandler"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_puqy4")
@@ -249,31 +219,6 @@ mesh = SubResource("PlaneMesh_a0o6w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/WallS/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_2la5w")
-
-[node name="ChangeColor" type="Node3D" parent="Map"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0.0986948)
-script = ExtResource("4_qhvbw")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/ChangeColor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0405182, 0)
-mesh = SubResource("CylinderMesh_ys5lp")
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="Map/ChangeColor"]
-amount = 100
-visibility_aabb = AABB(-2, 0, -2, 4, 2.5, 4)
-process_material = SubResource("ParticleProcessMaterial_gben2")
-draw_pass_1 = SubResource("SphereMesh_xirp1")
-
-[node name="Area3D" type="Area3D" parent="Map/ChangeColor"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/ChangeColor/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("CylinderShape3D_wo12c")
-
-[node name="Label3D" type="Label3D" parent="Map/ChangeColor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-text = "Color Change"
-font_size = 42
 
 [node name="Ramp" type="MeshInstance3D" parent="Map"]
 transform = Transform3D(1, 0, 0, 0, 0.928083, -0.372372, 0, 0.372372, 0.928083, -5.62117, 0.902635, -0.445016)
@@ -473,20 +418,17 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/BallPool/Ball09"]
 shape = SubResource("SphereShape3D_0eirp")
 
-[node name="Car" parent="." instance=ExtResource("2_wygbo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="3DCamera" parent="." node_paths=PackedStringArray("look_at") instance=ExtResource("3_adcb6")]
-look_at = NodePath("../Car")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.760134, -0.30235, 0.575136, 0.324884, 0.943409, 0.0665665, -0.562714, 0.136253, 0.815345, 0, 0, 0)
+transform = Transform3D(0.549461, -0.675258, 0.492056, 0.228772, 0.688006, 0.688703, -0.80359, -0.265847, 0.532512, 0, 0, 0)
 light_energy = 0.8
 shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_split_1 = 0.15
 
-[connection signal="color_changing" from="GUI" to="." method="_on_gui_color_changing"]
-[connection signal="color_close" from="GUI" to="." method="_on_gui_color_close"]
-[connection signal="change_car_color" from="Map/ChangeColor" to="." method="_on_change_car_color"]
-[connection signal="body_shape_entered" from="Map/ChangeColor/Area3D" to="Map/ChangeColor" method="_on_area_3d_body_shape_entered"]
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -18.5899, 5.24324, 18.8851)
+
+[connection signal="online_connect_server" from="UserInterface" to="NetworkHandler" method="_on_UserInterface_online_connect_server"]
+[connection signal="online_create_host" from="UserInterface" to="NetworkHandler" method="_on_UserInterface_online_create_host"]
+[connection signal="play_game" from="UserInterface" to="." method="_on_user_interface_play_game"]
+[connection signal="tree_exited" from="NetworkHandler" to="NetworkHandler" method="_on_tree_exited"]
